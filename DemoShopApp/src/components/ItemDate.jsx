@@ -1,9 +1,9 @@
 import './ItemDate.css';
 
-function ItemDate(){
-    const day = 20;
-    const month = "June";
-    const year = 1998;
+function ItemDate(props){
+    const day = props.day;
+    const month = props.month;
+    const year = props.year;
 
     return(
         <div className='mfg-date'>

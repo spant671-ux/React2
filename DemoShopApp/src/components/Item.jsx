@@ -1,7 +1,9 @@
 import './Item.css'
-function Item(){
+function Item(props){
+
+    const itemName = props.name;
     return (
-        <p className="para">Nirma</p>
+        <p className="para">{itemName}</p>
     )
 }
 
