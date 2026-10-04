@@ -30,7 +30,7 @@ function App() {
   return (
     <>
     <div>
-      <Item name={response[0].itemName}></Item>
+      <Item name={response[0].itemName}> Hello Guys Im First Item </Item>
       <ItemDate day={response[0].itemDate} month={response[0].itemMonth} year={response[0].itemYear}></ItemDate>
       <Item name={response[1].itemName}></Item>
       <ItemDate day={response[1].itemDate} month={response[1].itemMonth} year={response[1].itemYear}></ItemDate>

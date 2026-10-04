@@ -3,7 +3,10 @@ function Item(props){
 
     const itemName = props.name;
     return (
+        <div>
         <p className="para">{itemName}</p>
+        {props.children}
+        </div>
     )
 }
 
