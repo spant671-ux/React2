@@ -30,12 +30,12 @@ function App() {
   return (
     <>
     <div>
-      <Item name="Nirma"></Item>
-      <ItemDate day="20" month="June" year="2000"></ItemDate>
-      <Item name = {itemTwoName}></Item>
-      <ItemDate day="19" month="August" year="2010"></ItemDate>
-      <Item name="Ariel"></Item>
-      <ItemDate day="29" month="January" year="1990"></ItemDate>
+      <Item name={response[0].itemName}></Item>
+      <ItemDate day={response[0].itemDate} month={response[0].itemMonth} year={response[0].itemYear}></ItemDate>
+      <Item name={response[1].itemName}></Item>
+      <ItemDate day={response[1].itemDate} month={response[1].itemMonth} year={response[1].itemYear}></ItemDate>
+      <Item name={response[2].itemName}></Item>
+      <ItemDate day={response[2].itemDate} month={response[2].itemMonth} year={response[2].itemYear}></ItemDate>
     <div className='App'>Hello Guys</div>
     </div>
     </>
