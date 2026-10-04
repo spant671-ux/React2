@@ -13,6 +13,8 @@ React2/
 │   ├── src/                     # Application source code
 │   │   ├── assets/              # Icons and images
 │   │   ├── components/          # Reusable UI components
+│   │   │   ├── Card.css         # Styles for Card wrapper
+│   │   │   ├── Card.jsx         # Wrapper component (props.children & props.className)
 │   │   │   ├── Item.css         # Styles for Item
 │   │   │   ├── Item.jsx         # Item component (receives props.name)
 │   │   │   ├── ItemDate.css     # Styles for ItemDate
@@ -55,11 +57,14 @@ The application will be live at `http://localhost:5173`.
 
 ## 🌟 Key Concepts Implemented
 
-- **Component Creation & Composition**: Breaking the interface down into independent components ([Item.jsx](file:///c:/Personal/Code/React2/DemoShopApp/src/components/Item.jsx) and [ItemDate.jsx](file:///c:/Personal/Code/React2/DemoShopApp/src/components/ItemDate.jsx)) and composing them in [App.jsx](file:///c:/Personal/Code/React2/DemoShopApp/src/App.jsx).
+- **Component Creation & Composition**: Breaking the interface down into independent components ([Card.jsx](file:///c:/Personal/Code/React2/DemoShopApp/src/components/Card.jsx), [Item.jsx](file:///c:/Personal/Code/React2/DemoShopApp/src/components/Item.jsx), and [ItemDate.jsx](file:///c:/Personal/Code/React2/DemoShopApp/src/components/ItemDate.jsx)) and composing them in [App.jsx](file:///c:/Personal/Code/React2/DemoShopApp/src/App.jsx).
+- **Wrapper Components & `{props.children}`**: Using `<Card>` as a wrapper element to enclose child components.
+- **Custom Component Classes via `{props.className}`**: Explicitly extracting and combining `props.className` with component base classes (`'card ' + props.className`).
 - **JSX Fundamentals**: Returning clean markup, adhering to single-root rules, and using `className`.
 - **Props (Data Passing)**:
   - Passing static values (`name="Nirma"`).
   - Passing dynamic variables (`name={itemTwoName}`).
+  - Passing data arrays/objects (`response[0].itemName`).
   - Receiving and rendering multiple props (`day`, `month`, `year`).
 - **Styling**: Component-level CSS isolation with imported stylesheets.
 

@@ -104,18 +104,162 @@ function ItemDate({ day, month, year }) {
 
 ---
 
-## 5. Walkthrough of the DemoShopApp Codebase
+## 5. Styling Custom Components via `{props.className}`
+
+One of the most common pitfalls when learning React is expecting `className` on a custom component to work like it does on native HTML elements.
+
+### The Problem: Custom Components Do Not Automatically Inherit `className`
+
+Consider this code:
+```jsx
+// App.jsx
+<Card className="highlight-card">
+    <Item name="Nirma" />
+</Card>
+```
+
+If `Card.jsx` is defined simply as:
+```jsx
+// Card.jsx (INCORRECT / INCOMPLETE)
+function Card(props) {
+    return <div className="card">{props.children}</div>;
+}
+```
+
+> [!WARNING]
+> **The `highlight-card` style will NOT be applied!**  
+> Custom React components are JavaScript functions, not native HTML DOM nodes. React does **not** automatically forward `className` to the underlying `<div>`. To `<Card>`, `className` is just another custom prop: `props.className`.
+
+---
+
+### The Solution: Manually Extracting and Combining `{props.className}`
+
+To make classes passed from parent components take effect, you must explicitly read `props.className` and combine it with your component's internal class:
+
+#### Method 1: String Concatenation (Classic Pattern)
+```jsx
+import './Card.css';
+
+function Card(props) {
+    // Combine base class with any custom classes passed from the parent
+    const classes = 'card ' + (props.className || '');
+
+    return (
+        <div className={classes}>
+            {props.children}
+        </div>
+    );
+}
+
+export default Card;
+```
+
+#### Method 2: Template Literals (Modern Clean Syntax)
+```jsx
+import './Card.css';
+
+function Card(props) {
+    const classes = `card ${props.className || ''}`.trim();
+
+    return (
+        <div className={classes}>
+            {props.children}
+        </div>
+    );
+}
+
+export default Card;
+```
+
+#### Method 3: Props Destructuring with Default Value
+```jsx
+import './Card.css';
+
+function Card({ className = '', children }) {
+    const classes = `card ${className}`.trim();
+
+    return (
+        <div className={classes}>
+            {children}
+        </div>
+    );
+}
+
+export default Card;
+```
+
+---
+
+### Critical Gotchas with `{props.className}`
+
+| Common Mistake | Code | Result in HTML DOM | Impact |
+| :--- | :--- | :--- | :--- |
+| **Missing Space** | `'card' + props.className` | `<div class="cardhighlight-card">` | ❌ Neither class works because the names merge into one invalid class. |
+| **Missing Fallback** | `'card ' + props.className` (when no class passed) | `<div class="card undefined">` | ⚠️ Adds the literal string `"undefined"` as a CSS class. |
+| **Correct Pattern** | `'card ' + (props.className \|\| '')` or template literal | `<div class="card highlight-card">` | ✅ Both base and external styles apply cleanly. |
+
+---
+
+## 6. Component Composition with `{props.children}`
+
+`props.children` is a reserved React prop that represents whatever content is placed **between the opening and closing tags** of a custom component.
+
+### Why Use `props.children`?
+- Enables creating **Wrapper / Container Components** (e.g., `Card`, `Modal`, `Sidebar`, `Panel`).
+- Avoids hardcoding inner content, making the wrapper reusable for any elements.
+
+### Example in DemoShopApp:
+
+```jsx
+// Card.jsx — Reusable container
+import './Card.css';
+
+function Card(props) {
+    const classes = 'card ' + (props.className || '');
+    return <div className={classes}>{props.children}</div>;
+}
+
+export default Card;
+```
+
+```jsx
+// App.jsx — Using Card as a wrapper
+<Card className="shop-container">
+    <Item name={response[0].itemName}>Hello Guys Im First Item</Item>
+    <ItemDate day={response[0].itemDate} month={response[0].itemMonth} year={response[0].itemYear} />
+</Card>
+```
+
+In `Item.jsx`, children can also be rendered inside:
+```jsx
+// Item.jsx
+function Item(props) {
+    const itemName = props.name;
+    return (
+        <div>
+            <p className="para">{itemName}</p>
+            {props.children} {/* Renders "Hello Guys Im First Item" */}
+        </div>
+    );
+}
+```
+
+---
+
+## 7. Walkthrough of the DemoShopApp Codebase
 
 ```text
 React2/
 ├── DemoShopApp/
 │   ├── src/
 │   │   ├── components/
-│   │   │   ├── Item.jsx         # Renders item title via props.name
+│   │   │   ├── Card.jsx         # Wrapper container using props.children & props.className
+│   │   │   ├── Card.css         # Base styles for Card (.card)
+│   │   │   ├── Item.jsx         # Renders item title via props.name & optional children
 │   │   │   ├── Item.css         # Styles for Item
 │   │   │   ├── ItemDate.jsx     # Renders manufacturing date (day, month, year)
 │   │   │   └── ItemDate.css     # Styles for ItemDate
-│   │   ├── App.jsx              # Parent component assembling Items & ItemDates
+│   │   ├── App.jsx              # Parent component passing data array, props & Card wrapper
 │   │   ├── App.css              # App container styles
 │   │   ├── main.jsx             # React entry point mounting to DOM root
 │   │   └── index.css            # Global resets
@@ -125,24 +269,27 @@ React2/
 ```mermaid
 graph TD
     HTML["index.html (#root)"] --> Main["main.jsx (createRoot)"]
-    Main --> App["App.jsx"]
-    App --> Item1["Item (name='Nirma')"]
-    App --> Date1["ItemDate (day='20', month='June', year='2000')"]
-    App --> Item2["Item (name={itemTwoName})"]
-    App --> Date2["ItemDate (day='19', month='August', year='2010')"]
-    App --> Item3["Item (name='Ariel')"]
-    App --> Date3["ItemDate (day='29', month='January', year='1990')"]
+    Main --> App["App.jsx (Data: response array)"]
+    App --> Card["Card.jsx (wrapper: props.children + props.className)"]
+    Card --> Item1["Item (name=response[0].itemName)"]
+    Item1 --> Child1["props.children: 'Hello Guys Im First Item'"]
+    Card --> Date1["ItemDate (day, month, year from response[0])"]
+    Card --> Item2["Item (name=response[1].itemName)"]
+    Card --> Date2["ItemDate (day, month, year from response[1])"]
+    Card --> Item3["Item (name=response[2].itemName)"]
+    Card --> Date3["ItemDate (day, month, year from response[2])"]
 ```
 
 ---
 
-## 6. Next Steps & Advanced Concepts
+## 8. Next Steps & Advanced Concepts
 
-1. **Props Children (`props.children`)**:
-   - Passing content between opening and closing component tags: `<Card><Item ... /></Card>`.
+1. **State Management (`useState`)**:
+   - Making components interactive by storing and updating internal state.
 2. **Event Handling**:
    - Adding interactive event listeners: `onClick`, `onChange`, `onSubmit`.
-3. **State with `useState`**:
-   - Making components interactive by storing and updating internal state.
-4. **Lifting State Up**:
+3. **Lifting State Up**:
    - Sharing state between sibling components by managing it in their common parent.
+4. **Rendering Lists with `.map()`**:
+   - Dynamically rendering `response.map((item) => ...)` instead of manual array index referencing.
+
