@@ -7,11 +7,14 @@ import Item from './components/Item'
 import ItemDate from './components/ItemDate'
 
 function App() {
-  // const [count, setCount] = useState(0)
-
+  
   return (
     <>
     <div>
+      <Item></Item>
+      <ItemDate></ItemDate>
+      <Item></Item>
+      <ItemDate></ItemDate>
       <Item></Item>
       <ItemDate></ItemDate>
     <div className='App'>Hello Guys</div>
