@@ -2,48 +2,40 @@
 // import heroImg from './assets/hero.png'
 // import reactLogo from './assets/react.svg'
 // import viteLogo from './assets/vite.svg'
-import './App.css'
-import Item from './components/Item'
-import ItemDate from './components/ItemDate'
-import Card from './components/Card'
+import React from 'react';
+import Products from './components/Products';
 
-function App() {
-  const response = [
+const App = () => {
+  const products = [
     {
-      itemName: "Nirma",
-      itemDate: 20,
-      itemMonth: "June",
-      itemYear: "1998"
+      id: 'p1',
+      title: 'Nirma',
+      amount: 100,
+      date: new Date(2021, 8, 10),
     },
     {
-      itemName: "Nirma2",
-      itemDate: 2,
-      itemMonth: "July",
-      itemYear: "1990"
+      id: 'p2',
+      title: 'Surf Excel',
+      amount: 200,
+      date: new Date(2021, 2, 2),
     },
     {
-      itemName: "Nirma3",
-      itemDate: 10,
-      itemMonth: "September",
-      itemYear: "2010"
-    }
+      id: 'p3',
+      title: 'Tide',
+      amount: 130,
+      date: new Date(2021, 12, 28),
+    },
+    {
+      id: 'p4',
+      title: 'Ariel',
+      amount: 450,
+      date: new Date(2021, 5, 5),
+    },
   ];
-  return (
-    <>
-    <div>
-      <Card>
-        <Item name={response[0].itemName}> Hello Guys Im First Item </Item>
-      <ItemDate day={response[0].itemDate} month={response[0].itemMonth} year={response[0].itemYear}></ItemDate>
-      <Item name={response[1].itemName}></Item>
-      <ItemDate day={response[1].itemDate} month={response[1].itemMonth} year={response[1].itemYear}></ItemDate>
-      <Item name={response[2].itemName}></Item>
-      <ItemDate day={response[2].itemDate} month={response[2].itemMonth} year={response[2].itemYear}></ItemDate>
-      </Card>
-      
-    <div className='App'>Hello Guys</div>
-    </div>
-    </>
-  )
-}
 
-export default App
+  return (
+    <div>
+      <Products items={products} />
+    </div>
+  );
+}
