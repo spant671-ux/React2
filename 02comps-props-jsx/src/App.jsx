@@ -1,7 +1,11 @@
+import UserCard from './components/UserCard'
+import './App.css'
 function App() {
   return (
-    <div>
-      <h1>Hello Guys!</h1>
+    <div className='container'>
+      <UserCard />
+      <UserCard />
+      <UserCard />
     </div>
   )
 }
