@@ -11,6 +11,6 @@ const ProductDate = (props) => {
             <div className='product-date__year'>{year}</div>
             <div className='product-date__day'>{day}</div>
         </div>
-    )
+    );
 }
 export default ProductDate;

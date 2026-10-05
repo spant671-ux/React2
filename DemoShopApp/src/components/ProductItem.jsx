@@ -9,6 +9,7 @@ const ProductItem = (props) => {
             <div className='product-item__description'>
                 <h2>{props.title}</h2>
             </div>
+            <button>Add to cart</button>
         </Card>
     );
 }

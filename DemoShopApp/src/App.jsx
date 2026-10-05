@@ -2,7 +2,7 @@
 // import heroImg from './assets/hero.png'
 // import reactLogo from './assets/react.svg'
 // import viteLogo from './assets/vite.svg'
-import React from 'react';
+// import React from 'react';
 import Products from './components/Products';
 
 const App = () => {
@@ -39,3 +39,4 @@ const App = () => {
     </div>
   );
 }
+export default App;
