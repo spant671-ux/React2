@@ -1,6 +1,6 @@
 # React2 Learning Workspace
 
-Welcome to the **React2** workspace. This repository tracks React practice modules, component architecture experiments, and hands-on projects.
+Workspace tracking initial React practice projects built with Vite.
 
 ---
 
@@ -8,69 +8,72 @@ Welcome to the **React2** workspace. This repository tracks React practice modul
 
 ```text
 React2/
-├── DemoShopApp/                 # React + Vite application
-│   ├── public/                  # Static public assets
-│   ├── src/                     # Application source code
-│   │   ├── assets/              # Icons and images
-│   │   ├── components/          # Reusable UI components
-│   │   │   ├── Card.css         # Styles for Card wrapper
-│   │   │   ├── Card.jsx         # Wrapper component (props.children & props.className)
-│   │   │   ├── Item.css         # Styles for Item
-│   │   │   ├── Item.jsx         # Item component (receives props.name)
-│   │   │   ├── ItemDate.css     # Styles for ItemDate
-│   │   │   └── ItemDate.jsx     # ItemDate component (receives day, month, year)
-│   │   ├── App.css              # Styling for main layout
-│   │   ├── App.jsx              # Root component managing item list & props
-│   │   ├── index.css            # Base stylesheet
-│   │   └── main.jsx             # Entry point mounting React to DOM
-│   ├── index.html               # Main HTML entry file
-│   ├── package.json             # Dependencies and build scripts
-│   └── vite.config.js           # Vite build configuration
-├── notes.md                     # In-depth React study notes & cheat sheet
-└── readme.md                    # Workspace overview and project guide
+├── 01react/                     # First React project (Basic component & mount)
+│   ├── public/                  # Public static assets
+│   ├── src/                     # Source directory
+│   │   ├── assets/              # Icons and SVGs
+│   │   ├── components/          # Reusable components
+│   │   │   └── Navbar.jsx       # Arrow function component
+│   │   ├── App.css              # Component styling for App
+│   │   ├── App.jsx              # Function component using React Fragment
+│   │   ├── index.css            # Global reset and body layout styling
+│   │   └── main.jsx             # Entry point mounting Navbar to #root
+│   ├── index.html               # Single page HTML container with #root div
+│   ├── package.json             # React 19 + Vite dependencies
+│   └── vite.config.js           # Vite configuration
+│
+├── 02comps-props-jsx/           # Second React project (Components, Props & JSX practice)
+│   ├── public/                  # Static assets
+│   ├── src/                     # Source directory (Vite template setup)
+│   │   ├── App.css
+│   │   ├── App.jsx
+│   │   ├── index.css
+│   │   └── main.jsx
+│   ├── index.html
+│   ├── package.json
+│   └── vite.config.js
+│
+├── notes.md                     # Conceptual study notes strictly covering implemented topics
+└── readme.md                    # Workspace guide and project overview
 ```
 
 ---
 
-## 🛠️ Getting Started
+## 🛠️ How to Run the Projects
 
-To run the application locally:
-
-### 1. Navigate to the project directory
+### Running `01react`
 ```bash
-cd DemoShopApp
-```
-
-### 2. Install dependencies
-```bash
+cd 01react
 npm install
+npm run dev
 ```
+Open [http://localhost:5173](http://localhost:5173) to view the rendered `<Navbar />` component.
 
-### 3. Start development server
+### Running `02comps-props-jsx`
 ```bash
+cd 02comps-props-jsx
+npm install
 npm run dev
 ```
 
-The application will be live at `http://localhost:5173`.
+---
+
+## 🌟 What Is Currently Done
+
+### In `01react`:
+- **Root Mounting (`main.jsx`)**: Initialized React DOM root via `createRoot` and rendered `<Navbar />` directly into `#root`.
+- **Component Creation**:
+  - **[Navbar.jsx](file:///c:/Personal/Code/React2/01react/src/components/Navbar.jsx)**: Arrow function component returning nested JSX (`I am Navbar!`).
+  - **[App.jsx](file:///c:/Personal/Code/React2/01react/src/App.jsx)**: Functional component demonstrating React Fragments (`<>...</>`) and text rendering.
+- **Styling**:
+  - **[index.css](file:///c:/Personal/Code/React2/01react/src/index.css)**: Global CSS reset (`*`) and flexbox centering layout on `body`.
+  - **[App.css](file:///c:/Personal/Code/React2/01react/src/App.css)**: Component-specific font size styling.
+
+### In `02comps-props-jsx`:
+- Initialized clean project structure ready for component, props, and JSX exercises.
 
 ---
 
-## 🌟 Key Concepts Implemented
+## 📖 Related Documents
 
-- **Component Creation & Composition**: Breaking the interface down into independent components ([Card.jsx](file:///c:/Personal/Code/React2/DemoShopApp/src/components/Card.jsx), [Item.jsx](file:///c:/Personal/Code/React2/DemoShopApp/src/components/Item.jsx), and [ItemDate.jsx](file:///c:/Personal/Code/React2/DemoShopApp/src/components/ItemDate.jsx)) and composing them in [App.jsx](file:///c:/Personal/Code/React2/DemoShopApp/src/App.jsx).
-- **Wrapper Components & `{props.children}`**: Using `<Card>` as a wrapper element to enclose child components.
-- **Custom Component Classes via `{props.className}`**: Explicitly extracting and combining `props.className` with component base classes (`'card ' + props.className`).
-- **JSX Fundamentals**: Returning clean markup, adhering to single-root rules, and using `className`.
-- **Props (Data Passing)**:
-  - Passing static values (`name="Nirma"`).
-  - Passing dynamic variables (`name={itemTwoName}`).
-  - Passing data arrays/objects (`response[0].itemName`).
-  - Receiving and rendering multiple props (`day`, `month`, `year`).
-- **Styling**: Component-level CSS isolation with imported stylesheets.
-
----
-
-## 📖 Additional Resources
-
-- **[Study Notes (notes.md)](file:///c:/Personal/Code/React2/notes.md)**: Full theoretical breakdown of React concepts, JSX rules, props, and architectural diagrams.
-- **[DemoShopApp Source](file:///c:/Personal/Code/React2/DemoShopApp/src/)**: Source code directory for the shop demonstration app.
+- **[notes.md](file:///c:/Personal/Code/React2/notes.md)**: Detailed conceptual breakdown of everything implemented so far.
