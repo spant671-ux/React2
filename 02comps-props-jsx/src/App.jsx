@@ -7,9 +7,9 @@ import GutsPic from "./assets/Guts.jpg";
 function App() {
   return (
     <div className='container'>
-      <UserCard name="Zoro" desc="desc1" image={ZoroPic}/>
-      <UserCard name="Mikey" desc="desc2" image={MikeyPic}/>
-      <UserCard name="Guts" desc="desc3" image={GutsPic}/>
+      <UserCard name="Zoro" desc="desc1" image={ZoroPic} style={{"border-radius": "10px"}}/>
+      <UserCard name="Mikey" desc="desc2" image={MikeyPic} style={{"border-radius": "10px"}}/>
+      <UserCard name="Guts" desc="desc3" image={GutsPic} style={{"border-radius": "10px"}}/>
     </div>
   )
 }
