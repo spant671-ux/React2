@@ -3,9 +3,9 @@ import './App.css'
 function App() {
   return (
     <div className='container'>
-      <UserCard />
-      <UserCard />
-      <UserCard />
+      <UserCard name="Sans" desc="desc1" />
+      <UserCard name="Mikey" desc="desc2"/>
+      <UserCard name="Guts" desc="desc3"/>
     </div>
   )
 }
