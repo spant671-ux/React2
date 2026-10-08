@@ -12,8 +12,9 @@ function App() {
   const[name, setName] = useState('');
   return (
    <div>
-    <Card name={name} setName={setName}/>
-    <p>I am inside Parent component and value of Name is: {name}</p>
+    <Card title="Card 1" name={name} setName={setName}/>
+    <Card title="Card 2" name={name} setName={setName}/>
+    {/* <p>I am inside Parent component and value of Name is: {name}</p> */}
    </div>
   )
 }
