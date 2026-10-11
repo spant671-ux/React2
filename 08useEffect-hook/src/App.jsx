@@ -1,9 +1,15 @@
-import { useState } from "react"
-import { useEffect } from "react"
+// import { useState } from "react"
+// import { useEffect } from "react"
+
+// import DataFetcher from "./components/DataFetcher"
+// import LoggerComponent from "./components/LoggerComponent"
+import MultiEffectComponent from "./components/MultiEffectComponent"
+// import ResizeComponent from "./components/ResizeComponent"
+// import TimerComponent from "./components/TimerComponent"
 
 function App() {
-  const [count, setCount] = useState(0)
-  const [total, setTotal] = useState(1)
+  // const [count, setCount] = useState(0)
+  // const [total, setTotal] = useState(1)
 
   //first -> side-effect function
   //second -> clean-up function
@@ -28,25 +34,36 @@ function App() {
 
   //Variation: 4
   //Multiple Dependencies
-  useEffect(() => {
-    alert("I will run every time when count or total is updated!")
-  }, [count, total])
-  
-  
-  
+  // useEffect(() => {
+  //   alert("I will run every time when count or total is updated!")
+  // }, [count, total])
 
-  function clickHandler(){
-    setCount(count+1);
-  }
+  //Variation: 5
+  //Add a cleanup function
+  // useEffect(() => {
+  //   alert("Count is updated")
+  //   return () => {
+  //     alert("Count is unmounted from UI.");
+  //   }
+  // }, [count])
+  
+  // function clickHandler(){
+  //   setCount(count+1);
+  // }
 
-  function handleTotalClick(){
-    setTotal(total+1);
-  }
+  // function handleTotalClick(){
+  //   setTotal(total+1);
+  // }
   
 
   return (
     <div>
-      <button onClick={clickHandler}>
+      <MultiEffectComponent />
+      {/* <ResizeComponent /> */}
+      {/* <TimerComponent /> */}
+      {/* <LoggerComponent /> */}
+      {/* <DataFetcher /> */}
+      {/* <button onClick={clickHandler}>
         Update Count
       </button>
       <br />
@@ -57,7 +74,7 @@ function App() {
         Update Total
       </button>
       <br />
-      Total: {total}
+      Total: {total} */}
     </div>
   )
 }
