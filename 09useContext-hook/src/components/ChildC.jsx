@@ -1,9 +1,9 @@
 import { useContext } from 'react';
-// import { UserContext } from '../App';
+import { UserContext } from '../App';
 import { ThemeContext } from '../App'
 
 const ChildC = () => {
-    // const user = useContext(UserContext)
+    const user = useContext(UserContext)
     const {theme, setTheme} = useContext(ThemeContext)
     function clickHandler(){
       if(theme === 'light')
@@ -16,6 +16,7 @@ const ChildC = () => {
         <button onClick={clickHandler}>
           Change Theme
         </button>
+        data: {user.name}
     </div>
   )
 }

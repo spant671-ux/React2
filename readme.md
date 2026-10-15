@@ -1,6 +1,6 @@
 # React2 Learning Workspace
 
-Workspace tracking React fundamentals, component patterns, state management, and props across progressive modular practice projects.
+Workspace tracking React fundamentals, component patterns, state management, props, lifecycle effects, and global context across progressive modular practice projects.
 
 ---
 
@@ -58,7 +58,63 @@ React2/
 │   ├── index.html
 │   └── package.json
 │
-├── notes.md                     # Comprehensive conceptual study notes for all 4 modules
+├── 05state-lifting/             # Module 5: State Lifting & Sibling Synchronization
+│   ├── src/
+│   │   ├── components/
+│   │   │   └── Card.jsx         # Sibling card updating & reading lifted state via props
+│   │   ├── App.jsx              # Closest common ancestor holding name state & setter
+│   │   ├── index.css
+│   │   └── main.jsx
+│   ├── index.html
+│   └── package.json
+│
+├── 06conditional-rendering/     # Module 6: Conditional Rendering Patterns
+│   ├── src/
+│   │   ├── components/
+│   │   │   ├── LoginBtn.jsx     # Rendered when logged out
+│   │   │   └── LogoutBtn.jsx    # Rendered when logged in
+│   │   ├── App.jsx              # Early return, ternary, logical &&, if-else implementations
+│   │   ├── index.css
+│   │   └── main.jsx
+│   ├── index.html
+│   └── package.json
+│
+├── 07event-handling/            # Module 7: Event Handling & Synthetic Events
+│   ├── src/
+│   │   ├── App.jsx              # onClick, onMouseOver, onChange, onSubmit & e.preventDefault()
+│   │   ├── index.css
+│   │   └── main.jsx
+│   ├── index.html
+│   └── package.json
+│
+├── 08useEffect-hook/            # Module 8: Side Effects & Lifecycle with useEffect
+│   ├── src/
+│   │   ├── components/
+│   │   │   ├── DataFetcher.jsx         # API data fetching (jsonplaceholder) with loading state
+│   │   │   ├── LoggerComponent.jsx     # Side effect logger on every render
+│   │   │   ├── MultiEffectComponent.jsx# Multiple independent useEffects
+│   │   │   ├── ResizeComponent.jsx     # Window resize listener with removeEventListener cleanup
+│   │   │   └── TimerComponent.jsx      # setInterval timer with clearInterval cleanup
+│   │   ├── App.jsx              # 5 useEffect variations (all renders, mount, dependencies, cleanup)
+│   │   ├── index.css
+│   │   └── main.jsx
+│   ├── index.html
+│   └── package.json
+│
+├── 09useContext-hook/           # Module 9: Global State & Context API
+│   ├── src/
+│   │   ├── components/
+│   │   │   ├── ChildA.jsx       # Intermediate passthrough component
+│   │   │   ├── ChildB.jsx       # Intermediate passthrough component
+│   │   │   └── ChildC.jsx       # Deep consumer accessing UserContext & ThemeContext
+│   │   ├── App.jsx              # Context creation (createContext) & nested Providers
+│   │   ├── App.css
+│   │   ├── index.css
+│   │   └── main.jsx
+│   ├── index.html
+│   └── package.json
+│
+├── notes.md                     # Comprehensive conceptual study notes across all modules
 └── readme.md                    # Workspace guide and module overview
 ```
 
@@ -69,13 +125,18 @@ React2/
 To run any of the practice projects locally, change into its folder and start the Vite dev server:
 
 ```bash
-# Example: Running Module 3 (useState)
-cd 03usestate-hook
+# Example: Running Module 5 (State Lifting)
+cd 05state-lifting
 npm install
 npm run dev
 
-# Example: Running Module 4 (Advanced Props)
-cd ../04props-extra
+# Example: Running Module 8 (useEffect Hook)
+cd ../08useEffect-hook
+npm install
+npm run dev
+
+# Example: Running Module 9 (useContext Hook)
+cd ../09useContext-hook
 npm install
 npm run dev
 ```
@@ -92,9 +153,14 @@ The app will run locally on `http://localhost:5173` (or the next available port)
 | **`02comps-props-jsx`** | Components & Props | [UserCard.jsx](file:///c:/Personal/Code/React2/02comps-props-jsx/src/components/UserCard.jsx), [App.jsx](file:///c:/Personal/Code/React2/02comps-props-jsx/src/App.jsx) | Unidirectional data flow, passing primitive props (`name`, `desc`), importing local image assets as props (`image`), passing inline style objects (`style={props.style}`). |
 | **`03usestate-hook`** | State Management | [Counter.jsx](file:///c:/Personal/Code/React2/03usestate-hook/src/components/Counter.jsx), [App.jsx](file:///c:/Personal/Code/React2/03usestate-hook/src/App.jsx) | `useState` hook, initial state, updater function, state re-rendering, `onClick` event handling. |
 | **`04props-extra`** | Advanced Props | [Button.jsx](file:///c:/Personal/Code/React2/04props-extra/src/components/Button.jsx), [Card.jsx](file:///c:/Personal/Code/React2/04props-extra/src/components/Card.jsx), [App.jsx](file:///c:/Personal/Code/React2/04props-extra/src/App.jsx) | **`props.children`** (wrapper pattern), **passing functions as props** (`incrementCount={handleClick}`), parent-child communication. |
+| **`05state-lifting`** | State Lifting | [Card.jsx](file:///c:/Personal/Code/React2/05state-lifting/src/components/Card.jsx), [App.jsx](file:///c:/Personal/Code/React2/05state-lifting/src/App.jsx) | Lifting state up to closest common ancestor, sharing state between siblings, bidirectional data sync (`onChange` -> `setName`). |
+| **`06conditional-rendering`** | Conditional UI | [LoginBtn.jsx](file:///c:/Personal/Code/React2/06conditional-rendering/src/components/LoginBtn.jsx), [LogoutBtn.jsx](file:///c:/Personal/Code/React2/06conditional-rendering/src/components/LogoutBtn.jsx), [App.jsx](file:///c:/Personal/Code/React2/06conditional-rendering/src/App.jsx) | 4 approaches: Early return, Logical AND (`&&`), Ternary operator (`condition ? A : B`), classic `if-else`. |
+| **`07event-handling`** | Event Handling | [App.jsx](file:///c:/Personal/Code/React2/07event-handling/src/App.jsx) | SyntheticEvent system, inline vs referenced handlers (`onClick={clickHandler}`), `onMouseOver`, input tracking with `e.target.value`, form handling with `e.preventDefault()`. |
+| **`08useEffect-hook`** | Side Effects & Lifecycle | [App.jsx](file:///c:/Personal/Code/React2/08useEffect-hook/src/App.jsx), [DataFetcher.jsx](file:///c:/Personal/Code/React2/08useEffect-hook/src/components/DataFetcher.jsx), [TimerComponent.jsx](file:///c:/Personal/Code/React2/08useEffect-hook/src/components/TimerComponent.jsx), [ResizeComponent.jsx](file:///c:/Personal/Code/React2/08useEffect-hook/src/components/ResizeComponent.jsx) | 5 variations of `useEffect`, dependency array rules, cleanup functions (`clearInterval`, `removeEventListener`), async API fetching with loading states. |
+| **`09useContext-hook`** | Global State & Context | [App.jsx](file:///c:/Personal/Code/React2/09useContext-hook/src/App.jsx), [ChildC.jsx](file:///c:/Personal/Code/React2/09useContext-hook/src/components/ChildC.jsx) | Solving Prop Drilling, `createContext`, Context Providers (`UserContext.Provider`, `ThemeContext.Provider`), consuming state deeply with `useContext()`, theme toggle logic. |
 
 ---
 
 ## 📖 Related Documents
 
-- **[notes.md](file:///c:/Personal/Code/React2/notes.md)**: In-depth explanations, code snippets, gotchas, and architectural walkthrough for all topics implemented across the 4 modules.
+- **[notes.md](file:///c:/Personal/Code/React2/notes.md)**: In-depth explanations, code snippets, architectural diagrams, gotchas, and walkthroughs for all topics implemented across Modules 1 to 9.
