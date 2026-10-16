@@ -5,3 +5,7 @@ ul{
     padding-right: 10px;
     background-color: beige;
 }
+
+.active-link{
+    border: 2px solid red;
+}
