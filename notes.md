@@ -14,6 +14,7 @@ A structured, in-depth reference documenting core React concepts, architectural 
 - [📌 Module 7: Event Handling & Synthetic Events (`07event-handling`)](#-module-7-event-handling--synthetic-events-07event-handling)
 - [📌 Module 8: The `useEffect` Hook & Lifecycle Management (`08useEffect-hook`)](#-module-8-the-useeffect-hook--lifecycle-management-08useeffect-hook)
 - [📌 Module 9: The Context API & `useContext` Hook (`09useContext-hook`)](#-module-9-the-context-api--usecontext-hook-09usecontext-hook)
+- [📌 Module 10: Client-Side Routing with React Router (`10react-router`)](#-module-10-client-side-routing-with-react-router-10react-router)
 - [📊 Summary of Concepts Across Modules](#-summary-of-concepts-across-modules)
 
 ---
@@ -613,9 +614,253 @@ const ChildC = () => {
 export default ChildC;
 ```
 
-### 4. Key Takeaways
-- **Clean Intermediate Components**: `ChildA` and `ChildB` remain completely unaware of `user` and `theme`.
-- **Dynamic State Sharing**: By passing `{ theme, setTheme }` in the provider value, deep children cannot only read the state but also update it across the entire application.
+---
+
+## 📌 Module 10: Client-Side Routing with React Router (`10react-router`)
+
+### 1. What is Client-Side Routing & SPAs?
+In traditional multi-page web applications, clicking an `<a>` link sends an HTTP request to the web server, which fetches an entirely new HTML document and causes a visible page reload.
+In **Single Page Applications (SPAs)** built with React, the page never reloads. **React Router** intercepts URL changes, updates the browser address bar using the HTML5 History API, and renders the matched React component instantly into the DOM.
+
+### 2. Modern Router Architecture (`createBrowserRouter` & `RouterProvider`)
+React Router v6.4+ uses the **Data Router** architecture. Routes are defined as clean JavaScript objects rather than JSX elements:
+
+```jsx
+// src/App.jsx
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import Home from './components/Home'
+import About from "./components/About"
+import Dashboard from "./components/Dashboard"
+import Navbar from "./components/Navbar"
+import ParamComp from './components/ParamComp'
+import Courses from './components/Courses'
+import MockTest from './components/MockTest'
+import Reports from './components/Reports'
+import NotFound from './components/NotFound'
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <div><Navbar /><Home /></div>
+  },
+  {
+    path: "/about",
+    element: <div><Navbar /><About /></div>
+  },
+  {
+    path: "/dashboard",
+    element: <div><Navbar /><Dashboard /></div>,
+    // Nested child routes
+    children: [
+      { path: 'courses', element: <Courses /> },
+      { path: 'mock-tests', element: <MockTest /> },
+      { path: 'reports', element: <Reports /> }
+    ]
+  },
+  {
+    path: "/student/:id",
+    element: <div><Navbar /><ParamComp /></div>
+  },
+  {
+    // Catch-all route for non-existent paths
+    path: '*',
+    element: <NotFound />
+  }
+])
+
+function App() {
+  return <RouterProvider router={router} />
+}
+
+export default App
+```
+
+---
+
+### 3. Declarative Navigation with `NavLink` (Active Route Highlighting)
+While `<Link to="...">` replaces standard HTML `<a>` tags without refreshing the page, `<NavLink to="...">` extends it by providing access to the current active state (`isActive`):
+
+```jsx
+// src/components/Navbar.jsx
+import { NavLink } from 'react-router-dom'
+import './Navbar.css'
+
+const Navbar = () => {
+  return (
+    <nav>
+      <ul>
+        <li>
+          {/* Dynamically adds 'active-link' class when on current URL */}
+          <NavLink to="/" className={({ isActive }) => isActive ? "active-link" : ""}>
+            Home
+          </NavLink>
+        </li>
+        <li>
+          <NavLink to="/about" className={({ isActive }) => isActive ? "active-link" : ""}>
+            About
+          </NavLink>
+        </li>
+        <li>
+          <NavLink to="/dashboard" className={({ isActive }) => isActive ? "active-link" : ""}>
+            Dashboard
+          </NavLink>
+        </li>
+      </ul>
+    </nav>
+  )
+}
+
+export default Navbar
+```
+
+#### CSS Styling (`src/components/Navbar.css`):
+```css
+.active-link {
+  border-bottom: 2px solid green;
+  color: green;
+  font-weight: bold;
+}
+```
+
+---
+
+### 4. Programmatic Navigation with `useNavigate()`
+Sometimes navigation needs to happen in response to user actions or logic (e.g. submitting a form, clicking a generic action button, or logging out), rather than clicking a navigational link.
+React Router provides the `useNavigate` hook:
+
+```jsx
+// src/components/Home.jsx
+import { useNavigate } from "react-router-dom"
+
+const Home = () => {
+  const navigate = useNavigate();
+
+  function handleClick() {
+    // Navigates programmatically to /about
+    navigate('/about');
+  }
+
+  return (
+    <div>
+        <h2>Homepage</h2>
+        <button onClick={handleClick}>
+          Move to About Page
+        </button>
+    </div>
+  )
+}
+
+export default Home
+```
+
+---
+
+### 5. Nested Routes & The `<Outlet />` Component
+Nested routes allow portions of the UI to remain persistent while other child sections swap dynamically based on sub-paths (e.g. `/dashboard/courses`, `/dashboard/mock-tests`, `/dashboard/reports`).
+
+#### How `<Outlet />` Works:
+1. In `App.jsx`, nested routes are placed inside the parent's `children` array:
+   ```javascript
+   {
+     path: "/dashboard",
+     element: <div><Navbar /><Dashboard /></div>,
+     children: [
+       { path: 'courses', element: <Courses /> },
+       { path: 'mock-tests', element: <MockTest /> },
+       { path: 'reports', element: <Reports /> }
+     ]
+   }
+   ```
+2. Inside the parent component (`Dashboard.jsx`), render `<Outlet />` where the active child component should appear:
+   ```jsx
+   // src/components/Dashboard.jsx
+   import { Outlet, useNavigate } from "react-router-dom"
+
+   const Dashboard = () => {
+     const navigate = useNavigate();
+
+     return (
+       <div>
+           <h2>Dashboard Page</h2>
+           <button onClick={() => navigate('/')}>Move to Home</button>
+
+           {/* Outlet renders Courses, MockTest, or Reports depending on URL */}
+           <Outlet />
+       </div>
+     )
+   }
+
+   export default Dashboard
+   ```
+
+---
+
+### 6. Dynamic Routing with URL Parameters (`useParams()`)
+Dynamic routes allow paths to match patterns with variable segments, such as `/student/:id`:
+
+#### Defining Dynamic Path:
+```javascript
+{
+  path: "/student/:id",
+  element: <div><Navbar /><ParamComp /></div>
+}
+```
+
+#### Consuming the Parameter (`ParamComp.jsx`):
+The `useParams()` hook returns an object of key-value pairs of the dynamic params from the current URL:
+```jsx
+// src/components/ParamComp.jsx
+import { useParams } from "react-router-dom"
+
+const ParamComp = () => {
+    // Extracts 'id' matching ':id' in the route definition
+    const { id } = useParams();
+
+    return (
+      <div>
+          <h3>Student ID: {id}</h3>
+      </div>
+    )
+}
+
+export default ParamComp
+```
+If the user navigates to `/student/42`, `id` evaluates to `"42"`.
+
+---
+
+### 7. Catch-All Route (404 Page Not Found)
+When a user navigates to an undefined URL, the catch-all wildcard `*` route catches the request and renders a fallback `<NotFound />` component:
+
+```jsx
+// Route Definition in App.jsx
+{
+  path: '*',
+  element: <NotFound />
+}
+
+// src/components/NotFound.jsx
+const NotFound = () => {
+  return <div>404 - Page Not Found</div>
+}
+export default NotFound
+```
+
+---
+
+### Routing Architecture Diagram:
+```mermaid
+graph TD
+    Root["createBrowserRouter"] --> HomeRoute["/ -> <Home />"]
+    Root --> AboutRoute["/about -> <About />"]
+    Root --> DashRoute["/dashboard -> <Dashboard />"]
+    Root --> DynamicRoute["/student/:id -> <ParamComp /> (useParams)"]
+    Root --> CatchAll["* -> <NotFound /> (404 Fallback)"]
+
+    DashRoute -->|Rendered inside Outlet| Child1["/dashboard/courses -> <Courses />"]
+    DashRoute -->|Rendered inside Outlet| Child2["/dashboard/mock-tests -> <MockTest />"]
+    DashRoute -->|Rendered inside Outlet| Child3["/dashboard/reports -> <Reports />"]
+```
 
 ---
 
@@ -637,3 +882,9 @@ export default ChildC;
 | **SyntheticEvent & Forms** | `07event-handling` | Cross-browser event handling & prevent reload | `e.preventDefault()`, `onChange={(e) => val(e.target.value)}` |
 | **`useEffect` Lifecycle** | `08useEffect-hook` | Handle side effects & cleanups | `useEffect(() => { ... return () => cleanup() }, [deps])` |
 | **Context API (`useContext`)**| `09useContext-hook` | Eliminate prop drilling for global state | `createContext()`, `<Provider value={...}>`, `useContext()` |
+| **Client-Side Routing** | `10react-router` | Declarative, single-page client routing | `createBrowserRouter([routes])`, `<RouterProvider router={...} />` |
+| **Active Nav Links** | `10react-router` | Highlight currently active route | `<NavLink className={({isActive}) => isActive ? "active" : ""}>` |
+| **Programmatic Navigation** | `10react-router` | Navigate via imperative JavaScript | `const navigate = useNavigate(); navigate('/path')` |
+| **Nested Routing (`<Outlet />`)** | `10react-router` | Sub-page layout viewport inside parent | `children: [{path: 'sub', element: <Sub />}]`, `<Outlet />` |
+| **Dynamic URL Parameters** | `10react-router` | Extract dynamic URL route variables | Path: `/student/:id`, Access: `const { id } = useParams()` |
+| **404 Catch-All Fallback** | `10react-router` | Catch unmatched URL paths | Path: `'*'`, Element: `<NotFound />` |

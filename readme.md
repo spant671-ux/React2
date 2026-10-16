@@ -1,6 +1,6 @@
 # React2 Learning Workspace
 
-Workspace tracking React fundamentals, component patterns, state management, props, lifecycle effects, and global context across progressive modular practice projects.
+Workspace tracking React fundamentals, component patterns, state management, props, lifecycle effects, global context, and client-side routing across progressive modular practice projects.
 
 ---
 
@@ -114,7 +114,27 @@ React2/
 │   ├── index.html
 │   └── package.json
 │
-├── notes.md                     # Comprehensive conceptual study notes across all modules
+├── 10react-router/              # Module 10: Client-Side Routing with React Router
+│   ├── src/
+│   │   ├── components/
+│   │   │   ├── About.jsx        # About page with programmatic navigation
+│   │   │   ├── Courses.jsx      # Nested child route inside Dashboard
+│   │   │   ├── Dashboard.jsx    # Parent route with <Outlet /> for nested children
+│   │   │   ├── Home.jsx         # Home page with useNavigate navigation
+│   │   │   ├── MockTest.jsx     # Nested child route inside Dashboard
+│   │   │   ├── Navbar.css       # Active route indicator styling (.active-link)
+│   │   │   ├── Navbar.jsx       # Navigation bar with NavLink active state
+│   │   │   ├── NotFound.jsx     # 404 Catch-All fallback component
+│   │   │   ├── ParamComp.jsx    # Dynamic route parameter consumer (useParams)
+│   │   │   └── Reports.jsx      # Nested child route inside Dashboard
+│   │   ├── App.css
+│   │   ├── App.jsx              # createBrowserRouter configuration & RouterProvider
+│   │   ├── index.css
+│   │   └── main.jsx
+│   ├── index.html
+│   └── package.json
+│
+├── notes.md                     # Comprehensive conceptual study notes across all 10 modules
 └── readme.md                    # Workspace guide and module overview
 ```
 
@@ -130,13 +150,13 @@ cd 05state-lifting
 npm install
 npm run dev
 
-# Example: Running Module 8 (useEffect Hook)
-cd ../08useEffect-hook
+# Example: Running Module 9 (useContext Hook)
+cd ../09useContext-hook
 npm install
 npm run dev
 
-# Example: Running Module 9 (useContext Hook)
-cd ../09useContext-hook
+# Example: Running Module 10 (React Router)
+cd ../10react-router
 npm install
 npm run dev
 ```
@@ -158,9 +178,10 @@ The app will run locally on `http://localhost:5173` (or the next available port)
 | **`07event-handling`** | Event Handling | [App.jsx](file:///c:/Personal/Code/React2/07event-handling/src/App.jsx) | SyntheticEvent system, inline vs referenced handlers (`onClick={clickHandler}`), `onMouseOver`, input tracking with `e.target.value`, form handling with `e.preventDefault()`. |
 | **`08useEffect-hook`** | Side Effects & Lifecycle | [App.jsx](file:///c:/Personal/Code/React2/08useEffect-hook/src/App.jsx), [DataFetcher.jsx](file:///c:/Personal/Code/React2/08useEffect-hook/src/components/DataFetcher.jsx), [TimerComponent.jsx](file:///c:/Personal/Code/React2/08useEffect-hook/src/components/TimerComponent.jsx), [ResizeComponent.jsx](file:///c:/Personal/Code/React2/08useEffect-hook/src/components/ResizeComponent.jsx) | 5 variations of `useEffect`, dependency array rules, cleanup functions (`clearInterval`, `removeEventListener`), async API fetching with loading states. |
 | **`09useContext-hook`** | Global State & Context | [App.jsx](file:///c:/Personal/Code/React2/09useContext-hook/src/App.jsx), [ChildC.jsx](file:///c:/Personal/Code/React2/09useContext-hook/src/components/ChildC.jsx) | Solving Prop Drilling, `createContext`, Context Providers (`UserContext.Provider`, `ThemeContext.Provider`), consuming state deeply with `useContext()`, theme toggle logic. |
+| **`10react-router`** | Client-Side Routing | [App.jsx](file:///c:/Personal/Code/React2/10react-router/src/App.jsx), [Navbar.jsx](file:///c:/Personal/Code/React2/10react-router/src/components/Navbar.jsx), [Dashboard.jsx](file:///c:/Personal/Code/React2/10react-router/src/components/Dashboard.jsx), [ParamComp.jsx](file:///c:/Personal/Code/React2/10react-router/src/components/ParamComp.jsx) | `createBrowserRouter`, `RouterProvider`, `NavLink` with dynamic `isActive`, `useNavigate` for programmatic navigation, Nested Routes (`children` & `<Outlet />`), Dynamic Route Parameters (`useParams`), 404 Catch-All route (`*`). |
 
 ---
 
 ## 📖 Related Documents
 
-- **[notes.md](file:///c:/Personal/Code/React2/notes.md)**: In-depth explanations, code snippets, architectural diagrams, gotchas, and walkthroughs for all topics implemented across Modules 1 to 9.
+- **[notes.md](file:///c:/Personal/Code/React2/notes.md)**: In-depth explanations, code snippets, architectural diagrams, gotchas, and walkthroughs for all topics implemented across Modules 1 to 10.
