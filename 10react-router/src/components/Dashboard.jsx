@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom"
+import { Outlet, useNavigate } from "react-router-dom"
 
 const Dashboard = () => {
   const navigate = useNavigate()
@@ -11,6 +11,7 @@ const Dashboard = () => {
         <button onClick={handleClick}>
           Move to Home
         </button>
+        <Outlet />
     </div>
   )
 }
