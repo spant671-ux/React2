@@ -172,12 +172,11 @@ export default Counter
 ### 2. Handbook Diagram
 ```mermaid
 graph TD
-    Parent["Parent: App.jsx (State: count, fn: handleClick)"]
-    Child["Child: Button.jsx"]
+    Parent["Parent: App.jsx (Holds count state)"]
+    Child["Child: Button.jsx (Receives callback)"]
 
-    Parent -->|1. Passes callback prop handleClick| Child
-    Child -.->|2. User clicks -> calls props.incrementCount()| Parent
-    Parent -->|3. Updates count state & re-renders| Child
+    Parent -->|Passes handleClick as prop| Child
+    Child -->|User click executes handleClick| Parent
 ```
 
 ### 3. Essential Syntax & Patterns
@@ -228,14 +227,13 @@ Sibling components cannot communicate directly. When two or more siblings need t
 ### 2. Handbook Diagram
 ```mermaid
 graph TD
-    Parent["Parent: App.jsx (Holds State: name, setName)"]
-    Child1["Child 1: Card.jsx (Input changes name)"]
-    Child2["Child 2: Card.jsx (Displays synchronized name)"]
+    Parent["Common Parent: App.jsx (Holds state: name)"]
+    Card1["Child 1: Card.jsx (Input field)"]
+    Card2["Child 2: Card.jsx (Display card)"]
 
-    Parent -->|Passes name, setName| Child1
-    Parent -->|Passes name, setName| Child2
-    Child1 -.->|calls props.setName(e.target.value)| Parent
-    Parent -->|re-renders updated state| Child2
+    Parent -->|Passes setName function| Card1
+    Card1 -->|Typing in input updates parent state| Parent
+    Parent -->|Passes updated name prop| Card2
 ```
 
 ### 3. Essential Syntax & Patterns
@@ -481,11 +479,11 @@ Enables **Single Page Applications (SPAs)** where route changes dynamically swap
 ```mermaid
 graph TD
     Router["createBrowserRouter"]
-    Router --> Home["/ -> Home"]
-    Router --> About["/about -> About"]
-    Router --> Dash["/dashboard -> Dashboard"]
-    Router --> Param["/student/:id -> ParamComp (useParams)"]
-    Router --> CatchAll["* -> NotFound (404 Fallback)"]
+    Router --> Home["Path '/' renders Home"]
+    Router --> About["Path '/about' renders About"]
+    Router --> Dash["Path '/dashboard' renders Dashboard"]
+    Router --> Param["Path '/student/:id' renders ParamComp"]
+    Router --> CatchAll["Path '*' renders NotFound"]
 
     Dash -->|Renders inside Outlet| Sub1["/dashboard/courses"]
     Dash -->|Renders inside Outlet| Sub2["/dashboard/reports"]
@@ -553,10 +551,10 @@ Traditional forms with `useState` and `onChange` re-render the **entire componen
 graph TD
     Submit["User clicks Submit"] --> Handle["handleSubmit intercepted"]
     Handle --> Check{"Validations Pass?"}
-    Check -- "Fails" --> Errors["Populate errors object -> Apply .input-error & show message"]
-    Check -- "Passes" --> SetSubmitting["Set isSubmitting = true -> Disable Button"]
-    SetSubmitting --> API["Execute onSubmit(data) -> API Call"]
-    API --> Done["Promise Resolves -> isSubmitting = false"]
+    Check -- "Fails" --> Errors["Populate errors object: apply .input-error and message"]
+    Check -- "Passes" --> SetSubmitting["Set isSubmitting = true: disable button"]
+    SetSubmitting --> API["Execute onSubmit: perform API call"]
+    API --> Done["Promise Resolves: set isSubmitting = false"]
 ```
 
 ### 3. Essential Syntax & Patterns
@@ -622,7 +620,8 @@ export default App
 | Module | Core Topic | Primary Hook / API | One-Line Memory Hook |
 | :--- | :--- | :--- | :--- |
 | **01** | **Setup & Architecture** | `createRoot().render()` | Injects root component into single HTML DOM container. |
-| **02** | **Components & Props** | `props.name`, `props.image` | Immutable data flowing strictly top-down (Parent $ightarrow$ Child). |
+| **02** | **Components & Props** | `props.name`, `props.image` | Immutable data flowing strictly top-down (Parent $
+ightarrow$ Child). |
 | **03** | **State Management** | `useState(init)` | Reactive variables whose setters trigger component re-render. |
 | **04** | **Advanced Props** | `props.children`, callbacks | Container wrappers & child-to-parent event notification. |
 | **05** | **State Lifting** | Common Parent State | Lift state up to closest ancestor to sync sibling components. |
