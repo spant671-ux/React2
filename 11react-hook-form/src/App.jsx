@@ -11,6 +11,7 @@ function App() {
   } = useForm();
 
   function onSubmit(data){
+    //API Call simulation
     console.log("Submitting the form", data)
   }
 
@@ -29,8 +30,15 @@ function App() {
       <br/>
       <div>
         <label>Last Name: </label>
-        <input {...register('lastname')}/>
-      </div>
+        <input className={errors.lastname ? 'input-error' : ""} 
+        {...register('lastname',
+        {pattern: {
+          value: /^[A-Za-z]+$/i,
+          message: "Last name is not as per the rules"
+          }
+          })}/>
+          {errors.lastname && <p className="error-msg">{errors.lastname.message}</p>}
+      </div> 
       <br/>
       <input type="submit"/>
     </form>
