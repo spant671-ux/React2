@@ -19,7 +19,12 @@ function App() {
     <form onSubmit={handleSubmit(onSubmit)}>
       <div>
         <label>First Name: </label>
-        <input {...register('firstname')} />
+        <input className={errors.firstname ? 'input-error' : ""} 
+        {...register('firstname', 
+        { required: true, 
+        minLength: {value:3, message:"Min Length is atleast 3"}, 
+        maxLength: {value:20, message:"Max length is atleast 20"} })} />
+        {errors.firstname && <p className="error-msg">{errors.firstname.message}</p>}
       </div>
       <br/>
       <div>
