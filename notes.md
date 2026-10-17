@@ -36,6 +36,15 @@ A structured, in-depth reference documenting core React concepts, architectural 
    - `createRoot(...)`: Creates the root DOM container.
    - `.render(<Navbar />)`: Injects and renders the component into the browser DOM.
 
+#### React Application Mounting Flow:
+```mermaid
+graph TD
+    HTML["index.html<br/>(<div id='root'></div>)"] --> Main["main.jsx<br/>createRoot(root).render(...)"]
+    Main --> AppComp["Root Component (<Navbar /> / <App />)"]
+    AppComp --> VDOM["React Virtual DOM"]
+    VDOM --> RealDOM["Browser Real DOM"]
+```
+
 ### 2. Declaring Functional Components
 - **Arrow Function Component** (`src/components/Navbar.jsx`):
   ```jsx
@@ -77,6 +86,20 @@ A structured, in-depth reference documenting core React concepts, architectural 
 - **Props (Properties)** are arguments passed into React components from their parent.
 - Data flows **one-way (unidirectional)**: from Parent (`App.jsx`) down to Child (`UserCard.jsx`).
 - Props are **read-only (immutable)** inside the child component.
+
+#### Unidirectional Props Data Flow:
+```mermaid
+graph TD
+    Parent["Parent Component: App.jsx<br/>(Holds Data & Assets: ZoroPic, MikeyPic, GutsPic)"]
+
+    Child1["UserCard 1<br/>props: name='Zoro', image, desc"]
+    Child2["UserCard 2<br/>props: name='Mikey', image, desc"]
+    Child3["UserCard 3<br/>props: name='Guts', image, desc"]
+
+    Parent -->|Passes Props (Read-Only)| Child1
+    Parent -->|Passes Props (Read-Only)| Child2
+    Parent -->|Passes Props (Read-Only)| Child3
+```
 
 ### 2. Passing Props from Parent (`App.jsx`)
 ```jsx
@@ -158,9 +181,35 @@ export default Counter
 - `useState(0)`: Sets the initial value (`0`).
 - **`onClick={() => setCount(count + 1)}`**: Event listener passed as an arrow function that triggers state update upon button click.
 
+#### State Re-Render Lifecycle:
+```mermaid
+graph LR
+    User["User Action<br/>(Button Click)"] --> Trigger["Call Setter Function<br/>setCount(count + 1)"]
+    Trigger --> State["React Updates State<br/>(count: 0 → 1)"]
+    State --> ReRender["Component Re-renders<br/>Counter()"]
+    ReRender --> DOMUpdate["DOM Updated in Browser<br/>'You have clicked 1 times'"]
+```
+
 ---
 
 ## 📌 Module 4: Advanced Props — Children & Function Props (`04props-extra`)
+
+#### Advanced Props Architecture:
+```mermaid
+graph TD
+    subgraph Pattern1["Pattern 1: props.children (Wrapping Content)"]
+        Parent1["Parent (<App />)"] -->|Encloses JSX inside component tags| CardWrap["<Card> <h1>...</h1> </Card>"]
+        CardWrap --> RenderChildren["Card renders {props.children}"]
+    end
+
+    subgraph Pattern2["Pattern 2: Callback Props (Event Communication)"]
+        Parent2["Parent (<App />)<br/>Holds count state & handleClick"]
+        Child2["Child (<Button />)"]
+
+        Parent2 -->|Passes incrementCount={handleClick}| Child2
+        Child2 -.->|User clicks button -> calls props.incrementCount()| Parent2
+    end
+```
 
 ### Pattern 1: Passing Props as Children (`props.children`)
 `props.children` allows creating **Wrapper / Container components** that render whatever nested elements are placed between their opening and closing tags.
@@ -279,6 +328,21 @@ export default Card
 
 Conditional rendering in React allows rendering different elements or components based on certain state or prop conditions.
 
+#### Decision Flow of Conditional Rendering:
+```mermaid
+graph TD
+    State["isLoggedIn State (Boolean)"] --> Check{"isLoggedIn == true ?"}
+    Check -- Yes / True --> UserView["Render Logged-In UI<br/>(Welcome Heading + <LogoutBtn />)"]
+    Check -- No / False --> GuestView["Render Guest UI<br/>(<LoginBtn />)"]
+
+    subgraph Strategies["Handled via 4 Core Patterns"]
+        P1["1. Early Return"]
+        P2["2. Logical AND (&&)"]
+        P3["3. Ternary (? :)"]
+        P4["4. if-else Block"]
+    end
+```
+
 ### The 4 Core Patterns Demonstrated in `06conditional-rendering`
 
 #### Pattern 1: Early Return
@@ -335,6 +399,14 @@ if (isLoggedIn) {
 ## 📌 Module 7: Event Handling & Synthetic Events (`07event-handling`)
 
 React wraps native browser DOM events in a cross-browser wrapper called **`SyntheticEvent`**. It normalizes event behaviors so they behave consistently across Chrome, Safari, Firefox, and Edge.
+
+#### Event Delegation & SyntheticEvent Pipeline:
+```mermaid
+graph LR
+    Native["Native Browser DOM Event<br/>(click, mouseover, input, submit)"] --> Wrapper["React SyntheticEvent Wrapper<br/>(Cross-browser normalization)"]
+    Wrapper --> Handler["React Event Handler<br/>(onClick, onChange, onSubmit)"]
+    Handler --> Action["Action Executed:<br/>• e.preventDefault()<br/>• Read e.target.value<br/>• Update State / Trigger Logic"]
+```
 
 ### 1. Patterns Implemented in `App.jsx`
 
@@ -417,6 +489,23 @@ useEffect(() => {
 ```
 
 ### 3. The 5 Core Variations / Dependency Rules
+
+#### Lifecycle & Dependency Execution Flow:
+```mermaid
+graph TD
+    Mount["Component Mounts into DOM"] --> RunInitial["Run Setup Function in useEffect"]
+    RunInitial --> Wait["Waiting for State/Prop Changes"]
+
+    Wait --> DepCheck{"Do dependencies change?"}
+    DepCheck -- "[] (Empty)" --> NoRun["Never re-runs during lifecycle"]
+    DepCheck -- "[count] (Changed)" --> CleanupOld["1. Run Cleanup Function (if present)"]
+    CleanupOld --> RunNew["2. Re-run Setup Function with new values"]
+    RunNew --> Wait
+    DepCheck -- "No Array" --> ReRunAlways["Runs after every single render"]
+
+    Wait --> Unmount["Component Unmounts (Removed from DOM)"]
+    Unmount --> FinalCleanup["Run Final Cleanup Function<br/>(clearInterval, removeEventListener)"]
+```
 
 #### Variation 1: No Dependency Array
 Runs after **every single render** (initial mount + every state/prop update):
