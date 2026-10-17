@@ -7,11 +7,12 @@ function App() {
     register,
     handleSubmit,
     watch,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm();
 
-  function onSubmit(data){
+  async function onSubmit(data){
     //API Call simulation
+    await new Promise((resolve) => setTimeout(resolve, 5000));
     console.log("Submitting the form", data)
   }
 
@@ -40,7 +41,8 @@ function App() {
           {errors.lastname && <p className="error-msg">{errors.lastname.message}</p>}
       </div> 
       <br/>
-      <input type="submit"/>
+      <input type="submit" disabled={isSubmitting}
+      value={isSubmitting ? "Submitting" : "Submit"} />
     </form>
     </>
   )
