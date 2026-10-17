@@ -1,6 +1,6 @@
 # React2 Learning Workspace
 
-Workspace tracking React fundamentals, component patterns, state management, props, lifecycle effects, global context, and client-side routing across progressive modular practice projects.
+Workspace tracking React fundamentals, component patterns, state management, props, lifecycle effects, global context, client-side routing, and high-performance form handling across progressive modular practice projects.
 
 ---
 
@@ -134,7 +134,18 @@ React2/
 │   ├── index.html
 │   └── package.json
 │
-├── notes.md                     # Comprehensive conceptual study notes across all 10 modules
+├── 11react-hook-form/           # Module 11: High-Performance Forms with React Hook Form
+│   ├── src/
+│   │   ├── assets/
+│   │   │   └── hero.png
+│   │   ├── App.css              # Error border and message styling (.input-error, .error-msg)
+│   │   ├── App.jsx              # useForm hook, register, validation constraints, handleSubmit, isSubmitting
+│   │   ├── index.css
+│   │   └── main.jsx
+│   ├── index.html
+│   └── package.json
+│
+├── notes.md                     # Comprehensive conceptual study notes across all 11 modules
 └── readme.md                    # Workspace guide and module overview
 ```
 
@@ -159,6 +170,11 @@ npm run dev
 cd ../10react-router
 npm install
 npm run dev
+
+# Example: Running Module 11 (React Hook Form)
+cd ../11react-hook-form
+npm install
+npm run dev
 ```
 
 The app will run locally on `http://localhost:5173` (or the next available port).
@@ -179,9 +195,10 @@ The app will run locally on `http://localhost:5173` (or the next available port)
 | **`08useEffect-hook`** | Side Effects & Lifecycle | [App.jsx](file:///c:/Personal/Code/React2/08useEffect-hook/src/App.jsx), [DataFetcher.jsx](file:///c:/Personal/Code/React2/08useEffect-hook/src/components/DataFetcher.jsx), [TimerComponent.jsx](file:///c:/Personal/Code/React2/08useEffect-hook/src/components/TimerComponent.jsx), [ResizeComponent.jsx](file:///c:/Personal/Code/React2/08useEffect-hook/src/components/ResizeComponent.jsx) | 5 variations of `useEffect`, dependency array rules, cleanup functions (`clearInterval`, `removeEventListener`), async API fetching with loading states. |
 | **`09useContext-hook`** | Global State & Context | [App.jsx](file:///c:/Personal/Code/React2/09useContext-hook/src/App.jsx), [ChildC.jsx](file:///c:/Personal/Code/React2/09useContext-hook/src/components/ChildC.jsx) | Solving Prop Drilling, `createContext`, Context Providers (`UserContext.Provider`, `ThemeContext.Provider`), consuming state deeply with `useContext()`, theme toggle logic. |
 | **`10react-router`** | Client-Side Routing | [App.jsx](file:///c:/Personal/Code/React2/10react-router/src/App.jsx), [Navbar.jsx](file:///c:/Personal/Code/React2/10react-router/src/components/Navbar.jsx), [Dashboard.jsx](file:///c:/Personal/Code/React2/10react-router/src/components/Dashboard.jsx), [ParamComp.jsx](file:///c:/Personal/Code/React2/10react-router/src/components/ParamComp.jsx) | `createBrowserRouter`, `RouterProvider`, `NavLink` with dynamic `isActive`, `useNavigate` for programmatic navigation, Nested Routes (`children` & `<Outlet />`), Dynamic Route Parameters (`useParams`), 404 Catch-All route (`*`). |
+| **`11react-hook-form`** | Form Handling & Validation | [App.jsx](file:///c:/Personal/Code/React2/11react-hook-form/src/App.jsx), [App.css](file:///c:/Personal/Code/React2/11react-hook-form/src/App.css) | `react-hook-form`, `useForm()` hook, `register` (uncontrolled refs), validation constraints (`required`, `minLength`, `maxLength`, `pattern` regex), `handleSubmit`, `errors` state, and async submission with `isSubmitting`. |
 
 ---
 
 ## 📖 Related Documents
 
-- **[notes.md](file:///c:/Personal/Code/React2/notes.md)**: In-depth explanations, code snippets, architectural diagrams, gotchas, and walkthroughs for all topics implemented across Modules 1 to 10.
+- **[notes.md](file:///c:/Personal/Code/React2/notes.md)**: In-depth explanations, code snippets, architectural diagrams, gotchas, and walkthroughs for all topics implemented across Modules 1 to 11.
